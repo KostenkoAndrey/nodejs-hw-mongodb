@@ -4,7 +4,7 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 
-export const getContactsController = async (req, res, next) => {
+export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
@@ -15,6 +15,7 @@ export const getContactsController = async (req, res, next) => {
   sortBy,
   sortOrder,
   filter,
+  userId: req.user._id,
 });
 
 res.status(200).json({
@@ -24,7 +25,7 @@ res.status(200).json({
 });
 };
 
-export const getContactByIdController = async (req, res, next) => {
+export const getContactByIdController = async (req, res) => {
 const { contactId } = req.params;
 const contact = await getContactsById(contactId);
 
@@ -40,7 +41,7 @@ if(!contact){
 };
 
 export const createContactController = async (req, res) => {
-    const contact = await createContact(req.body);
+    const contact = await createContact(req.body, req.user._id);
 
     res.status(201).json({
     status: 201,
@@ -49,7 +50,7 @@ export const createContactController = async (req, res) => {
   });
 };
 
-export const deleteContactController = async (req, res, next) => {
+export const deleteContactController = async (req, res) => {
     const { contactId } = req.params;
     const contact = await deleteContact(contactId);
 
@@ -60,7 +61,7 @@ export const deleteContactController = async (req, res, next) => {
     res.status(204).send();
 };
 
-export const upsertContactController = async (req, res, next) => {
+export const upsertContactController = async (req, res) => {
     const { contactId } = req.params;
 
     const result = await updateContact(contactId, req.body, {
@@ -80,7 +81,7 @@ export const upsertContactController = async (req, res, next) => {
     });
   };
 
-  export const patchContactController = async (req, res, next) => {
+  export const patchContactController = async (req, res) => {
     const { contactId } = req.params;
     const result = await updateContact(contactId, req.body);
 

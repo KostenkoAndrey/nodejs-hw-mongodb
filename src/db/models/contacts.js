@@ -22,10 +22,10 @@ import { model, Schema } from 'mongoose';
        enum: ["work", "home", "personal"],
        default: "personal",
      },
-     parentId: { 
-      type: Schema.Types.ObjectId, 
-      ref: 'users' 
-    }, 
+     userId: {
+      type: String,
+      required: true,
+     },
    },
    {
      timestamps: true,

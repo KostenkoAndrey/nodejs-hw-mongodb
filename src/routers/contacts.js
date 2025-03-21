@@ -5,17 +5,15 @@ import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createContactSchema, updateContactSchema } from '../validation/contacts.js';
 import { authenticate } from '../middlewares/authenticate.js';
-import { checkRoles } from '../middlewares/checkRoles.js';
-import { ROLES } from '../constants/index.js';
 
 const router = Router();
 router.use(authenticate);
 
-router.get('/', checkRoles(ROLES.TEACHER), ctrlWrapper(getContactsController));
-router.get('/:contactId', checkRoles(ROLES.TEACHER, ROLES.PARENT), isValidId, ctrlWrapper(getContactByIdController));
-router.post('/', checkRoles(ROLES.TEACHER), validateBody(createContactSchema), ctrlWrapper(createContactController));
-router.delete('/:contactId', checkRoles(ROLES.TEACHER), isValidId, ctrlWrapper(deleteContactController));
-router.put('/:contactId', checkRoles(ROLES.TEACHER), isValidId, validateBody(createContactSchema), ctrlWrapper(upsertContactController));
-router.patch('/:contactId', checkRoles(ROLES.TEACHER, ROLES.PARENT), isValidId, validateBody(updateContactSchema), ctrlWrapper(patchContactController));
+router.get('/', ctrlWrapper(getContactsController));
+router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdController));
+router.post('/', validateBody(createContactSchema), ctrlWrapper(createContactController));
+router.delete('/:contactId', isValidId, ctrlWrapper(deleteContactController));
+router.put('/:contactId', isValidId, validateBody(createContactSchema), ctrlWrapper(upsertContactController));
+router.patch('/:contactId', isValidId, validateBody(updateContactSchema), ctrlWrapper(patchContactController));
 
 export default router;
