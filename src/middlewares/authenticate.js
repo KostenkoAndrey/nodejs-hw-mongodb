@@ -5,8 +5,10 @@ import { UsersCollection } from '../db/models/user.js';
 export const authenticate = async (req, res, next) => {
 const authHeader = req.get('Authorization');
 
-if (!authHeader) throw createHttpError(401, 'Please provide Authorization header');
-
+if (!authHeader) {
+    return next(createHttpError(401, 'Please provide Authorization header'));
+  }
+  
 const [ bearer, token ] = authHeader.split(' ', 2);
 
 if (bearer !== 'Bearer' || !token) next(createHttpError(401, 'Auth header should be of type Bearer')); 
