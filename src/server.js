@@ -15,7 +15,7 @@ export const setupServer = () => {
 
   const app = express();
   app.use(express.json());
-  app.use(cors({ origin: ['https://editor.swagger.io', 'https://swaggerhub.com', 'https://contacts-app-xj5y.onrender.com'], credentials: true }));
+  app.use(cors());
   app.use(cookieParser());
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
