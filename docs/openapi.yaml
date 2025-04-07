@@ -16,24 +16,24 @@ servers:
   - url: https://contacts-app-xj5y.onrender.com
   - url: https://example.com/api/v1
 paths:
-  /api/auth/register:
+  /auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
-  /api/auth/login:
+  /auth/login:
     post:
       $ref: ../swagger/paths/auth/login.yaml
-  /api/auth/logout:
+  /auth/logout:
     post:
       $ref: ../swagger/paths/auth/logout.yaml
-  /api/auth/refresh:
+  /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml    
-  /api/contacts/{id}:
+  /contacts/{id}:
     patch: 
       $ref: ../swagger/paths/contacts/{id}/patch.yaml
     delete: 
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
-  /api/contacts:
+  /contacts:
     get:
       $ref: ../swagger/paths/contacts/get.yaml
     post:
